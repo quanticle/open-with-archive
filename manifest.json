@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Open with Archive.is",
+  "version": "0.1",
+  "description": "Add a right-click menu item to allow the user to open links with archive.is",
+  "permissions": ["background", "contextMenus", "storage"],
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "scripts": ["js/background.js"]
+  }
+}

@@ -1,0 +1,3 @@
+#+TITLE: Open With Archive.today
+
+This is a small Firefox extension that adds a context menu item to links which opens the archive.today version of the links. It uses the new =timegate= feature of archive.today, and passes the URL without query params to archive.today, and opens the archive page in a new tab.
