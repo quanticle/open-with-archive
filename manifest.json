@@ -4,7 +4,7 @@
   "icons": {
     "96": "book_96.png"
   },
-  "version": "0.2",
+  "version": "0.3",
   "description": "Add a right-click menu item to allow the user to open links with archive.is",
   "permissions": ["contextMenus", "storage"],
   "options_ui": {

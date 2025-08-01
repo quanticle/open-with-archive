@@ -21,18 +21,27 @@ async function getOpenSearchPageOption() {
   return false;
 }
 
-browser.contextMenus.onClicked.addListener(async (info, tab) => {
-  let linkUrl = new URL(info.linkUrl);
-  let strippedUrl = new URL(`${linkUrl.protocol}//${linkUrl.hostname}${linkUrl.pathname}`);
-  let archiveHostname = await getArchiveHostname();
+async function getArchiveUrl(url) {
+  if (/archive\.../.test(url.hostname)){
+    let originalUrl = url.pathname.split("/").slice(5).join("/");
+    return getArchiveUrl(new URL(`https://${originalUrl}`));
+  }
   let openSearchPage = await getOpenSearchPageOption();
+  let archiveHostname = await getArchiveHostname();
+  let strippedUrl = new URL(`${url.protocol}//${url.hostname}${url.pathname}`);
   let archiveUrl = "";
-  if (openSearchPage){
+  if (openSearchPage) {
     archiveUrl = `https://${archiveHostname}/${strippedUrl}`;
   }
   else {
     archiveUrl = `https://${archiveHostname}/timegate/${strippedUrl}`;
   }
+  return archiveUrl;
+}
+
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
+  let linkUrl = new URL(info.linkUrl);
+  let archiveUrl = await getArchiveUrl(linkUrl);
   if(info.menuItemId === "archive_context_menu") {
     browser.tabs.create({url: archiveUrl,
                          openerTabId: tab.id});
